@@ -1,0 +1,1834 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Macroeconomics — Quiz 2 Reviewer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1a1208;
+        --parchment: #f5efe3;
+        --cream: #faf6ee;
+        --gold: #c8922a;
+        --rust: #a63d2f;
+        --sage: #4a6741;
+        --slate: #3d4f5c;
+        --soft: #e8dfc8;
+        --muted: #7a6e5f;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--cream);
+        color: var(--ink);
+        font-family: "Lora", Georgia, serif;
+        min-height: 100vh;
+      }
+
+      .topbar {
+        height: 4px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--gold) 0px,
+          var(--gold) 30px,
+          var(--ink) 30px,
+          var(--ink) 32px
+        );
+      }
+
+      header {
+        background: var(--ink);
+        color: var(--parchment);
+        padding: 2.5rem 2rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      header::before {
+        content: "❧";
+        position: absolute;
+        font-size: 18rem;
+        opacity: 0.04;
+        top: -3rem;
+        left: -2rem;
+        color: var(--gold);
+        pointer-events: none;
+      }
+      header h1 {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        margin-bottom: 0.4rem;
+      }
+      header p {
+        font-family: "DM Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-top: 0.5rem;
+      }
+
+      .score-banner {
+        background: var(--soft);
+        border-bottom: 1px solid #d4c9b0;
+        padding: 0.7rem 2rem;
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        flex-wrap: wrap;
+      }
+      .score-banner .stat {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .score-banner .stat strong {
+        color: var(--ink);
+        font-size: 1rem;
+      }
+      .score-banner .stat strong.neg {
+        color: var(--rust);
+      }
+
+      nav {
+        display: flex;
+        gap: 0;
+        background: var(--soft);
+        border-bottom: 2px solid var(--ink);
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      nav::-webkit-scrollbar {
+        display: none;
+      }
+      nav button {
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.85rem 1.4rem;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        border-right: 1px solid #d4c9b0;
+        white-space: nowrap;
+        transition: all 0.2s;
+        position: relative;
+      }
+      nav button::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transition: transform 0.2s;
+      }
+      nav button:hover {
+        color: var(--ink);
+        background: rgba(200, 146, 42, 0.08);
+      }
+      nav button.active {
+        color: var(--ink);
+        font-weight: 500;
+      }
+      nav button.active::after {
+        transform: scaleX(1);
+      }
+
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+      }
+
+      .tab-panel {
+        display: none;
+      }
+      .tab-panel.active {
+        display: block;
+      }
+
+      /* ── NOTES ── */
+      .session-card {
+        background: white;
+        border: 1px solid #ddd5be;
+        border-radius: 2px;
+        margin-bottom: 1.5rem;
+        box-shadow: 2px 2px 0 #e0d5c0;
+        overflow: hidden;
+      }
+      .session-header {
+        background: var(--ink);
+        color: var(--parchment);
+        padding: 1rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        gap: 1rem;
+      }
+      .session-header h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+      }
+      .session-header .tag {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        color: var(--gold);
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .session-body {
+        padding: 1.5rem;
+        display: none;
+      }
+      .session-body.open {
+        display: block;
+      }
+      .session-body h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1rem;
+        color: var(--rust);
+        margin: 1.2rem 0 0.5rem;
+        border-left: 3px solid var(--gold);
+        padding-left: 0.6rem;
+      }
+      .session-body h3:first-child {
+        margin-top: 0;
+      }
+      .session-body p {
+        font-size: 0.92rem;
+        line-height: 1.75;
+        color: #3a3228;
+        margin-bottom: 0.7rem;
+      }
+      .session-body ul {
+        padding-left: 1.3rem;
+        margin-bottom: 0.7rem;
+      }
+      .session-body ul li {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: #3a3228;
+        margin-bottom: 0.35rem;
+      }
+      .quote-block {
+        background: var(--parchment);
+        border-left: 4px solid var(--gold);
+        padding: 1rem 1.2rem;
+        margin: 1rem 0;
+        font-style: italic;
+        font-size: 0.9rem;
+        line-height: 1.8;
+        color: #4a3f30;
+      }
+      .formula {
+        background: var(--ink);
+        color: var(--parchment);
+        font-family: "DM Mono", monospace;
+        font-size: 0.85rem;
+        padding: 0.9rem 1.1rem;
+        margin: 0.9rem 0;
+        border-left: 4px solid var(--gold);
+        overflow-x: auto;
+        white-space: nowrap;
+        letter-spacing: 0.02em;
+      }
+      .key-term {
+        display: inline-block;
+        background: var(--ink);
+        color: var(--gold);
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        padding: 0.15rem 0.5rem;
+        border-radius: 2px;
+        margin: 0.2rem 0.1rem;
+        text-transform: uppercase;
+      }
+      .key-terms-wrap {
+        margin-top: 0.8rem;
+      }
+
+      /* ── QUIZ SHARED ── */
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+      }
+      .section-sub {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+      }
+      .penalty-note {
+        background: var(--parchment);
+        border: 1px dashed var(--rust);
+        padding: 0.8rem 1.1rem;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: #4a3f30;
+        margin-bottom: 1.5rem;
+      }
+      .penalty-note strong {
+        color: var(--rust);
+      }
+      .progress-bar {
+        height: 4px;
+        background: var(--soft);
+        margin-bottom: 1.5rem;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--gold);
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      .ch-divider {
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin: 2.4rem 0 0.8rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid var(--soft);
+      }
+      .ch-divider:first-child {
+        margin-top: 0;
+      }
+
+      .q-card {
+        background: white;
+        border: 1px solid #ddd5be;
+        border-radius: 2px;
+        padding: 1.4rem 1.5rem;
+        margin-bottom: 1.2rem;
+        box-shadow: 2px 2px 0 #e8dfc8;
+      }
+      .q-card.answered-ok {
+        border-color: var(--sage);
+        background: #eaf5e8;
+        box-shadow: 2px 2px 0 #c6e0c4;
+      }
+      .q-card.answered-bad {
+        border-color: var(--rust);
+        background: #fbeae8;
+        box-shadow: 2px 2px 0 #f0c9c4;
+      }
+
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--gold);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .q-num .delta {
+        font-weight: 500;
+      }
+      .q-num .delta.plus {
+        color: var(--sage);
+      }
+      .q-num .delta.minus {
+        color: var(--rust);
+      }
+      .q-text {
+        font-size: 0.95rem;
+        line-height: 1.65;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .option-btn {
+        text-align: left;
+        background: var(--cream);
+        border: 1.5px solid #d4c9b0;
+        border-radius: 2px;
+        padding: 0.6rem 1rem;
+        font-family: "Lora", serif;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.15s;
+        color: var(--ink);
+        line-height: 1.5;
+      }
+      .option-btn:hover:not(:disabled) {
+        background: var(--soft);
+        border-color: var(--gold);
+      }
+      .option-btn.correct {
+        background: #eaf5e8;
+        border-color: var(--sage);
+        color: var(--sage);
+        font-weight: 600;
+      }
+      .option-btn.wrong {
+        background: #fbeae8;
+        border-color: var(--rust);
+        color: var(--rust);
+      }
+      .option-btn:disabled {
+        cursor: default;
+      }
+
+      .feedback {
+        margin-top: 0.7rem;
+        font-size: 0.85rem;
+        font-style: italic;
+        color: var(--muted);
+        display: none;
+        line-height: 1.6;
+      }
+      .feedback.show {
+        display: block;
+      }
+
+      .btn {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.6rem 1.4rem;
+        border: 2px solid var(--ink);
+        background: var(--ink);
+        color: var(--parchment);
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .btn:hover {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: var(--ink);
+      }
+      .btn.outline {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn.outline:hover {
+        background: var(--ink);
+        color: var(--parchment);
+      }
+
+      .quiz-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .score-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .result-box {
+        background: var(--parchment);
+        border: 1px solid #d4c9b0;
+        padding: 1.5rem 2rem;
+        text-align: center;
+        margin-top: 2rem;
+        display: none;
+      }
+      .result-box.show {
+        display: block;
+      }
+      .result-box .big {
+        font-family: "Playfair Display", serif;
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: var(--ink);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .result-box .breakdown {
+        font-family: "DM Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        margin-bottom: 0.6rem;
+      }
+      .result-box .msg {
+        font-size: 0.9rem;
+        font-style: italic;
+        color: var(--muted);
+        margin-bottom: 1.2rem;
+      }
+      .chapter-scores {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        line-height: 1.9;
+        margin-bottom: 1.2rem;
+        text-align: left;
+        display: inline-block;
+      }
+
+      @media (max-width: 600px) {
+        nav button {
+          padding: 0.7rem 1rem;
+          font-size: 0.65rem;
+        }
+        .score-banner {
+          gap: 1.2rem;
+          padding: 0.6rem 1rem;
+        }
+        .formula {
+          font-size: 0.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar"></div>
+    <header>
+      <h1>Macroeconomics<br /><em>Quiz 2 Reviewer</em></h1>
+      <p>
+        Mitchell · Wray · Watts &nbsp;|&nbsp; Ch. 2, 4, 6.1–6.3, 7.6
+        &nbsp;|&nbsp; Asian Institute of Management
+      </p>
+    </header>
+
+    <div class="score-banner" id="score-banner" style="display: none">
+      <div class="stat"><strong id="s-raw">0</strong> / 60 Raw Score</div>
+      <div class="stat"><strong id="s-right">0</strong> Correct</div>
+      <div class="stat"><strong id="s-wrong">0</strong> Wrong (−0.5)</div>
+      <div class="stat"><strong id="s-done">0</strong> / 60 Answered</div>
+    </div>
+
+    <nav>
+      <button class="active" onclick="showTab('notes', this)">Notes</button>
+      <button onclick="showTab('exam', this)">Exam · 60 Items</button>
+    </nav>
+
+    <main>
+      <!-- ==================== NOTES ==================== -->
+      <div class="tab-panel active" id="tab-notes">
+        <!-- Chapter 2 -->
+        <div class="session-card">
+          <div class="session-header" onclick="toggleSession(this)">
+            <h2>Chapter 2 — How to Think and Do Macroeconomics</h2>
+            <span class="tag">Method ▾</span>
+          </div>
+          <div class="session-body open">
+            <h3>Thinking in a Macroeconomic Way</h3>
+            <p>
+              The single most important idea in the chapter is the
+              <strong>fallacy of composition</strong>: what is true for one
+              individual acting alone is not necessarily true when everyone does
+              it. One person standing at a concert sees better; if everyone
+              stands, nobody does. Macroeconomics therefore has
+              <strong>emergent properties</strong> — it is not microeconomics
+              scaled up, and macro conclusions cannot be obtained by simply
+              adding together the behaviour of individual agents.
+            </p>
+            <p>
+              The mechanism that makes this bite is that
+              <strong>one agent's spending is another agent's income</strong>.
+              That is why the <em>paradox of thrift</em> works: if all households
+              try to save more at once, aggregate spending falls, national income
+              falls, and total saving can end up lower rather than higher.
+            </p>
+            <div class="quote-block">
+              The same error is committed when the government's finances are
+              described as a household budget. A household must obtain income
+              before it spends. A currency-issuing government is the source of
+              the currency, so transferring the household logic to it is a
+              fallacy of composition dressed up as common sense.
+            </div>
+
+            <h3>What Should a Macroeconomic Theory Explain?</h3>
+            <p>
+              The authors judge a theory by whether it can explain what is
+              actually observed, not by its internal elegance or the
+              sophistication of its mathematics. Six benchmarks are used:
+            </p>
+            <ul>
+              <li><strong>Real GDP growth</strong> — persistent output gaps and slow recoveries.</li>
+              <li><strong>Unemployment</strong> — mass unemployment that persists rather than clearing.</li>
+              <li>
+                <strong>Real wages and productivity</strong> — since the 1980s
+                real wages have grown more slowly than productivity, so the wage
+                share of national income has fallen.
+              </li>
+              <li>
+                <strong>Private sector indebtedness</strong> — the gap between
+                wages and productivity was filled by household borrowing, which
+                built up fragility.
+              </li>
+              <li>
+                <strong>Central bank balance sheets</strong> — the enormous
+                expansion of reserves after 2008 did not produce the accelerating
+                inflation the quantity theory predicted.
+              </li>
+              <li>
+                <strong>Japan</strong> — the "glaring counterfactual": decades of
+                very large fiscal deficits and the highest public debt ratio in
+                the world, yet near-zero interest rates, no inflation crisis and
+                no default.
+              </li>
+            </ul>
+
+            <h3>Why Economists Disagree — The Minimum Wage</h3>
+            <p>
+              Economics cannot run controlled laboratory experiments. Evidence is
+              always interpreted through a prior theoretical framework, and those
+              frameworks carry value judgements. A competitive labour market model
+              predicts that a minimum wage rise destroys jobs; other frameworks
+              predict it need not. The same data are then read differently, so
+              disagreement survives the evidence. This is also why the authors
+              insist macroeconomics <strong>cannot be value-free</strong> — the
+              choice of question, assumption and policy target is itself a value
+              judgement.
+            </p>
+
+            <h3>The Structure of Scientific Revolutions (Kuhn)</h3>
+            <ul>
+              <li>
+                <strong>Paradigm</strong> — the shared framework of assumptions,
+                methods and accepted questions.
+              </li>
+              <li>
+                <strong>Normal science</strong> — puzzle-solving inside the
+                paradigm; the fundamental assumptions are not themselves tested.
+              </li>
+              <li>
+                <strong>Anomalies → crisis → revolution</strong> — anomalies
+                accumulate, confidence collapses, and a rival paradigm displaces
+                the old one. Progress is not smooth accumulation.
+              </li>
+            </ul>
+            <div class="key-terms-wrap">
+              <span class="key-term">Fallacy of Composition</span>
+              <span class="key-term">Paradox of Thrift</span>
+              <span class="key-term">Emergent Properties</span>
+              <span class="key-term">Japan Counterfactual</span>
+              <span class="key-term">Paradigm</span>
+              <span class="key-term">Normal Science</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 4 -->
+        <div class="session-card">
+          <div class="session-header" onclick="toggleSession(this)">
+            <h2>Chapter 4 — National Income &amp; Product Accounts</h2>
+            <span class="tag">Measurement ▾</span>
+          </div>
+          <div class="session-body">
+            <h3>What GDP Is</h3>
+            <p>
+              GDP is the value of all <strong>final</strong> goods and services,
+              evaluated at <strong>market prices</strong>, produced
+              <strong>within a country</strong> in a <strong>given period</strong>.
+              Intermediate goods are excluded to avoid double counting. GDP is a
+              <em>flow</em> over a period — it is <strong>not</strong> a measure
+              of a nation's wealth, which is a stock.
+            </p>
+
+            <h3>The Three Equivalent Measures</h3>
+            <ul>
+              <li>
+                <strong>Expenditure (GDP):</strong> C + I (gross capital
+                formation) + G + (X − M).
+              </li>
+              <li>
+                <strong>Production (GVA):</strong> gross output minus intermediate
+                inputs, summed over all sectors — agriculture, industry, services.
+              </li>
+              <li>
+                <strong>Income (GDI):</strong> compensation of employees +
+                consumption of fixed capital + taxes on production and imports −
+                subsidies + net operating surplus.
+              </li>
+            </ul>
+            <div class="quote-block">
+              Take one final good sold for ₱100. Its ₱100 can be read three ways:
+              as the value added created in producing it, as the wages, profits
+              and taxes generated in producing it, and as the ₱100 spent by its
+              final buyer. Production = Income = Expenditure, by construction.
+            </div>
+
+            <h3>What Counts and What Doesn't</h3>
+            <ul>
+              <li>A car bought by a household is <strong>consumption</strong>; the same car bought by a firm is <strong>investment</strong>.</li>
+              <li>A new home enters as <strong>residential investment</strong> in the year completed, at the value of the construction only.</li>
+              <li>A <strong>pre-owned</strong> home is not counted — it was counted when built. Only the real estate agent's <strong>commission</strong> enters this year's GDP.</li>
+              <li><strong>Imputed rent</strong>: owner-occupiers are treated as landlords renting to themselves, so the housing service is counted even with no market transaction.</li>
+              <li>Excluded: home cooking and unpaid household work, the black market, most of the informal sector, sales of used goods, purchases of financial assets (that is saving, not spending), intermediate goods, and government <strong>transfer payments</strong> (no production in exchange).</li>
+            </ul>
+
+            <h3>GDP vs GNI</h3>
+            <p>
+              GDP measures production <em>located</em> inside the borders. GNI
+              measures income <em>accruing to residents</em> wherever earned:
+              GDP plus net foreign income. For the Philippines, GNI exceeds GDP
+              because of large net inflows from overseas Filipino workers.
+              GNI per capita of about USD 4,850 (1 July 2026) put the country
+              above the upper-middle-income threshold of USD 4,636.
+            </p>
+
+            <h3>GDP Is Not a Measure of Well-being</h3>
+            <p>
+              Pollution and social costs are not deducted, yet the clean-up
+              spending and the medical treatment of those made sick by it are both
+              added. Military equipment counts. Eliminating tobacco would raise
+              well-being and lower GDP.
+            </p>
+
+            <h3>Real GDP, Deflators and Growth Rates</h3>
+            <p>
+              Nominal values are deflated to remove the price effect so that
+              changes reflect the volume of output. Because relative prices drift,
+              a fixed base year becomes less representative over time, which is
+              why <strong>chain weighting</strong> updates the weights each
+              period. <strong>Year-on-year</strong> comparison is preferred to
+              quarter-on-quarter when a series is seasonal — a resort's Q1 can be
+              far below Q4 and still be growing.
+            </p>
+            <div class="key-terms-wrap">
+              <span class="key-term">Final Goods</span>
+              <span class="key-term">Gross Value Added</span>
+              <span class="key-term">Imputed Rent</span>
+              <span class="key-term">Net Operating Surplus</span>
+              <span class="key-term">GNI</span>
+              <span class="key-term">Chain Weighting</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 6 -->
+        <div class="session-card">
+          <div class="session-header" onclick="toggleSession(this)">
+            <h2>Chapter 6.1–6.3 — Sectoral Accounting</h2>
+            <span class="tag">Identities ▾</span>
+          </div>
+          <div class="session-body">
+            <h3>Deriving the Sectoral Balances</h3>
+            <p>Start from the income identity and add net foreign income:</p>
+            <div class="formula">GNI ≡ C + I + G + (X − M) + NFI</div>
+            <p>Subtract taxes net of transfers (T) from both sides:</p>
+            <div class="formula">(GNI − C − T) − I ≡ (G − T) + (X − M + NFI)</div>
+            <p>Which rearranges to the identity you must know cold:</p>
+            <div class="formula">(S − I) + (T − G) − CAB ≡ 0</div>
+            <ul>
+              <li><strong>(S − I)</strong> — private domestic financial balance.</li>
+              <li><strong>(T − G)</strong> — government financial balance.</li>
+              <li><strong>CAB = X − M + NFI</strong> — current account balance.</li>
+            </ul>
+            <p>
+              This is an <strong>accounting identity</strong>, true by
+              construction. It tells you what must add up; it is not a behavioural
+              theory of what causes what.
+            </p>
+
+            <h3>What the Identity Implies</h3>
+            <ul>
+              <li>For one sector to run a surplus, at least one other must run a deficit. All three cannot normally be in surplus.</li>
+              <li>The exception — the <strong>Golden Triangle</strong> — requires a current account surplus <em>larger</em> than the fiscal surplus. Rare; Sweden is the usual example.</li>
+              <li>In a country with a current account <em>deficit</em>, the private domestic sector can only save overall if the government runs a fiscal deficit <em>larger</em> than that current account deficit.</li>
+              <li>A government deficit equals, peso for peso, a non-government surplus.</li>
+            </ul>
+
+            <h3>Saving vs Savings</h3>
+            <p>
+              <strong>Saving (no "s")</strong> is a flow, a residual of income
+              (S = Y − C − T), and involves changes in net financial assets.
+              <strong>Savings (with an "s")</strong> is a gross stock of assets
+              held — deposits, stocks, bonds, property. More savings does not
+              imply more net worth. A rise in Saving does not automatically mean a
+              rise in savings.
+            </p>
+
+            <h3>Net Financial Assets, Inside and Outside Wealth</h3>
+            <ul>
+              <li>Every financial asset is someone else's liability, so financial assets <strong>net to zero</strong> across sectors.</li>
+              <li><strong>Inside wealth</strong> is claims held within the private sector — a bank loan raises one party's asset and another's liability, leaving the sector's net position unchanged.</li>
+              <li><strong>Outside wealth</strong> comes from outside the private sector, i.e. claims on government. In a closed economy, net private financial wealth equals the public debt; with a permanently balanced budget it would be zero.</li>
+              <li><strong>Real assets</strong> (buildings, machinery) are the exception — they are assets with no matching liability, so they do not net out.</li>
+            </ul>
+
+            <h3>Horizontal vs Vertical Transactions</h3>
+            <ul>
+              <li><strong>Horizontal</strong> — within the non-government sector (bank loans, buying goods, buying shares). These <em>do not</em> change the sector's net financial assets.</li>
+              <li><strong>Vertical</strong> — between government and non-government (spending, taxation). These <em>do</em> change the sector's net financial assets.</li>
+            </ul>
+
+            <h3>Causality</h3>
+            <p>
+              For an <em>individual</em>, income constrains spending. For the
+              <em>economy as a whole</em>, the causation runs the other way:
+              aggregate spending creates aggregate income. A society cannot decide
+              to have more income, but it can decide to spend more.
+            </p>
+
+            <h3>Two Things the Chapter Corrects</h3>
+            <ul>
+              <li>The <strong>loanable funds</strong> story — save, deposit, lend, invest — is wrong. Banks create deposits when they lend; prior saving is not a precondition.</li>
+              <li><strong>Reserve balances</strong> are liabilities of the central bank held by commercial banks. No private institution can create them; they are created when the central bank credits a bank's account.</li>
+            </ul>
+            <p>
+              Finally: while every point on the sectoral balances map is possible,
+              the private domestic sector cannot run deficits indefinitely,
+              because those deficits must be funded and accumulate as a rising
+              stock of private debt.
+            </p>
+            <div class="key-terms-wrap">
+              <span class="key-term">Accounting Identity</span>
+              <span class="key-term">NAFA</span>
+              <span class="key-term">Golden Triangle</span>
+              <span class="key-term">Inside/Outside Wealth</span>
+              <span class="key-term">Vertical Transaction</span>
+              <span class="key-term">Loans Create Deposits</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 7.6 -->
+        <div class="session-card">
+          <div class="session-header" onclick="toggleSession(this)">
+            <h2>Chapter 7.6 — Index Numbers</h2>
+            <span class="tag">Technique ▾</span>
+          </div>
+          <div class="session-body">
+            <h3>What an Index Number Does</h3>
+            <p>
+              An index expresses each value of a variable as a percentage of a
+              reference value — the <strong>base</strong>, set to 100. The unit of
+              measurement disappears, which is exactly why you can put Korean and
+              German tourist arrivals on the same chart and see which grew faster,
+              even though one is twenty times larger than the other. Indices work
+              for time series and for cross-sections (prices across provinces).
+            </p>
+
+            <h3>Composite Indices — Two Wrong-ish Options</h3>
+            <p>
+              For a composite like seafood (shrimp, tuna, squid) you can index the
+              average price, or average the individual indices. These give
+              different numbers. Indexing the average implicitly weights each item
+              by its price level; averaging the indices gives every item equal
+              weight regardless of how much of it people actually buy. Neither
+              uses quantity information — which is what the weighted formulas fix.
+            </p>
+
+            <h3>The Three Weighted Price Indices</h3>
+            <ul>
+              <li><strong>Laspeyres</strong> — uses <em>base-period</em> quantities as weights.</li>
+              <li><strong>Paasche</strong> — uses <em>current-period</em> quantities as weights.</li>
+              <li><strong>Fisher</strong> — the geometric mean of the Laspeyres and Paasche indices.</li>
+            </ul>
+            <div class="quote-block">
+              Because Laspeyres freezes base-period quantities, it ignores that
+              consumers substitute away from goods that have become relatively
+              more expensive — so it tends to <em>overstate</em> the rise in the
+              cost of living. Paasche, using current quantities, tends to
+              understate it.
+            </div>
+            <p>
+              Applied: the <strong>GDP deflator</strong> is a Paasche-type index
+              (current-period weights). The <strong>CPI</strong> is a
+              Laspeyres-type index (base-period basket weights) — in the
+              Philippines specifically a <em>chained Laspeyres</em>.
+            </p>
+
+            <h3>Deflation</h3>
+            <p>
+              Deflation converts a nominal series (valued at each period's prices)
+              into a real or constant-price series. When the monetary values are
+              not the product of a price and a quantity — salaries, for example —
+              you must choose a price index that reflects the prices actually
+              faced by the group whose income you are deflating.
+            </p>
+
+            <h3>Linking and Re-basing</h3>
+            <ul>
+              <li><strong>Linking</strong> two series with different bases: use the overlap year to get a conversion factor. If the old series (1990 = 100) reads 807.7 in 2021 and the new series is 2021 = 100, the factor is 8.077 — multiply the new series by it to extend the old one, or divide the old by it to extend the new.</li>
+              <li><strong>Re-basing</strong>: divide every value in the series by the value in the intended new base year and multiply by 100.</li>
+            </ul>
+
+            <h3>Chain Indices and the CPI</h3>
+            <p>
+              A <strong>chain index</strong> updates the comparison base every
+              period and links successive movements together, instead of
+              comparing everything to a distant fixed year. The PSA builds the CPI
+              from a market basket derived from the Family Income and Expenditure
+              Survey, with each item weighted by its share of average household
+              spending. <strong>Core inflation</strong> excludes selected food and
+              energy items.
+            </p>
+            <div class="quote-block">
+              Two warnings worth memorising: a <em>lower inflation rate does not
+              mean prices have fallen</em> — it usually means prices are still
+              rising, only more slowly, while the accumulated burden remains. And
+              two households with different spending patterns experience different
+              personal inflation rates even when facing the same CPI.
+            </div>
+            <div class="key-terms-wrap">
+              <span class="key-term">Base = 100</span>
+              <span class="key-term">Laspeyres</span>
+              <span class="key-term">Paasche</span>
+              <span class="key-term">Fisher</span>
+              <span class="key-term">Substitution Bias</span>
+              <span class="key-term">Chain Index</span>
+              <span class="key-term">Core Inflation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== EXAM ==================== -->
+      <div class="tab-panel" id="tab-exam">
+        <div class="section-title">Conceptual Exam</div>
+        <div class="section-sub">
+          60 items · Multiple choice · Select the best answer
+        </div>
+        <div class="penalty-note">
+          <strong>Scoring:</strong> +1 for each correct answer,
+          <strong>−0.5 for each wrong answer</strong>. Unanswered items score
+          zero. A raw score below zero is possible. Guessing pays only if you can
+          eliminate at least two options.
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="ex-prog"></div>
+        </div>
+        <div id="ex-wrap"></div>
+        <div class="quiz-controls">
+          <div class="score-badge">
+            Raw Score: <span id="ex-score-txt">0 / 60</span>
+          </div>
+          <button class="btn outline" onclick="resetExam()">↺ Reset Exam</button>
+        </div>
+        <div class="result-box" id="ex-result">
+          <div class="big" id="ex-big"></div>
+          <div class="breakdown" id="ex-breakdown"></div>
+          <div class="chapter-scores" id="ex-chapters"></div>
+          <div class="msg" id="ex-msg"></div>
+          <button class="btn" onclick="resetExam()">↺ Retake Exam</button>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const Q = [
+        // ============ CHAPTER 2 ============
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "A spectator stands up at a crowded concert to see the stage better. When everyone else does the same, no one sees any better than before. Which macroeconomic principle does this illustrate?",
+          o: [
+            "The fallacy of composition",
+            "The law of diminishing marginal returns",
+            "The ceteris paribus assumption",
+            "Opportunity cost",
+          ],
+          a: 0,
+          fb: "What is true for one agent acting alone need not hold when all agents act the same way. This is the central reason macroeconomics is not microeconomics scaled up.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "Why can an attempt by all households to increase their saving simultaneously end up reducing total saving in the economy?",
+          o: [
+            "Higher saving drives up interest rates, which discourages further saving",
+            "Banks refuse to accept additional deposits once reserves are full",
+            "One agent's spending is another agent's income, so a general cut in spending lowers national income and therefore the income out of which saving is made",
+            "Households substitute towards imported goods, leaking the saving abroad",
+          ],
+          a: 2,
+          fb: "The paradox of thrift. Because spending and income are two sides of the same transaction, a collective attempt to save more contracts the income base itself.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "Which statement best captures the textbook's position on the relationship between microeconomics and macroeconomics?",
+          o: [
+            "Macroeconomics is simply microeconomics applied to larger numbers, so macro results follow from aggregating individual behaviour",
+            "The macroeconomic system has emergent properties, so its behaviour cannot be derived by summing the behaviour of individual agents",
+            "Microeconomics is irrelevant to macroeconomic analysis and should be discarded entirely",
+            "Macroeconomics and microeconomics study identical questions using different mathematical techniques",
+          ],
+          a: 1,
+          fb: "The whole behaves differently from the sum of its parts. Insisting that macro conclusions be derived from individual optimisation is precisely the error the chapter warns against.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "According to the authors, a macroeconomic theory should be judged primarily by:",
+          o: [
+            "The mathematical rigour and internal consistency of its formal model",
+            "Whether its assumptions are derived from the optimising behaviour of representative agents",
+            "The parsimony of its assumptions, regardless of their realism",
+            "Its ability to explain observed real-world outcomes such as growth, unemployment, wage–productivity gaps and central bank balance sheets",
+          ],
+          a: 3,
+          fb: "The chapter sets out a checklist of observed phenomena and asks which framework can account for them. Elegance is not a substitute for explanatory power.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "Why do the authors describe Japan as a 'glaring counterfactual' case?",
+          o: [
+            "Japan grew rapidly for decades without accumulating any public debt at all",
+            "Japan abandoned its sovereign currency and demonstrated the advantages of a monetary union",
+            "Japan ran very large fiscal deficits and carried the highest public debt ratio in the world, yet experienced near-zero interest rates, no inflation crisis and no default",
+            "Japan's central bank refused to expand its balance sheet after 2008, which proved the effectiveness of austerity",
+          ],
+          a: 2,
+          fb: "The mainstream predicted rising interest rates, inflation and bond market revolt. Decades of Japanese data delivered none of these, which is what makes it a decisive counterexample.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "Why does the divergence between real wage growth and labour productivity growth since the 1980s matter for macroeconomic theory?",
+          o: [
+            "It implies the wage share of national income falls, so wage growth alone can no longer sustain consumption — a gap that was increasingly filled by household debt",
+            "It proves that labour markets clear more quickly than previously believed",
+            "It shows that productivity statistics are systematically mismeasured",
+            "It demonstrates that technological change has stopped raising output per worker",
+          ],
+          a: 0,
+          fb: "This is the link the chapter draws between the wage–productivity gap and rising private sector indebtedness, and ultimately to financial fragility.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "The dramatic expansion of central bank balance sheets after 2008 is used in the chapter as evidence against which proposition?",
+          o: [
+            "That financial crises can originate in the private sector",
+            "That central banks are capable of setting short-term interest rates",
+            "That commercial banks hold deposits at the central bank",
+            "That a large increase in bank reserves must generate accelerating inflation",
+          ],
+          a: 3,
+          fb: "The quantity-theory prediction failed the test. Reserves rose by an order of magnitude and the inflation that was confidently forecast did not appear.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "The chapter uses the minimum wage debate to illustrate why economists disagree about policy. The main reason offered is that:",
+          o: [
+            "Minimum wage data are collected too infrequently to support any conclusion",
+            "Economics cannot run controlled experiments, so evidence is always interpreted through competing theoretical frameworks that carry value judgements",
+            "Econometric software packages produce different results from the same data",
+            "Minimum wage legislation differs too much across countries to permit comparison",
+          ],
+          a: 1,
+          fb: "The same evidence is read differently depending on the prior framework, so more data does not automatically settle the dispute.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "In Kuhn's framework, 'normal science' is best described as:",
+          o: [
+            "Puzzle-solving research conducted inside an accepted paradigm whose fundamental assumptions are not themselves questioned",
+            "Research conducted without any shared theoretical assumptions",
+            "The systematic attempt to falsify the core assumptions of the dominant framework",
+            "The period immediately following the overthrow of an established paradigm",
+          ],
+          a: 0,
+          fb: "Normal science takes the paradigm for granted and works on the problems it defines. Testing the paradigm's own foundations is not part of the activity.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "According to Kuhn's account, a paradigm shift becomes likely when:",
+          o: [
+            "A more mathematically sophisticated version of the existing theory is developed",
+            "Enough practitioners retire and are replaced by younger researchers",
+            "Anomalies that the dominant paradigm cannot explain accumulate, producing a crisis in which a rival framework can displace it",
+            "Governments withdraw funding from the dominant research programme",
+          ],
+          a: 2,
+          fb: "Knowledge does not advance by smooth accumulation. Accumulated anomalies produce crisis, and crisis opens the way to replacement.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "The authors argue that macroeconomics cannot be value-free. Their reasoning is that:",
+          o: [
+            "Economists are paid by institutions with vested interests, which corrupts their findings",
+            "The choice of which questions to ask, which assumptions to make and which outcomes to treat as desirable all embed value judgements, even when the technique is formally neutral",
+            "Statistical techniques are inherently unreliable when applied to social data",
+            "Macroeconomic data are collected by governments and therefore cannot be trusted",
+          ],
+          a: 1,
+          fb: "The claim is about the structure of inquiry, not the honesty of individual economists. Framing a question already involves choosing what matters.",
+        },
+        {
+          ch: "Chapter 2 — How to Think and Do Macroeconomics",
+          q: "Which of the following is an example of the fallacy of composition applied to government finances?",
+          o: [
+            "Arguing that taxation reduces the disposable income of the households that pay it",
+            "Observing that a government's spending in one year exceeds its tax revenue in that year",
+            "Noting that government spending appears in the expenditure measure of GDP",
+            "Concluding that because a household must obtain income before it can spend, a currency-issuing government must do the same",
+          ],
+          a: 3,
+          fb: "The household analogy transfers a constraint that binds a currency user to the issuer of the currency, where it does not apply.",
+        },
+        // ============ CHAPTER 4 ============
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Which of the following statements about GDP is FALSE?",
+          o: [
+            "It values output at market prices",
+            "It counts only final goods and services",
+            "It measures the accumulated wealth of a nation",
+            "It refers to production within a given period of time",
+          ],
+          a: 2,
+          fb: "GDP is a flow of production over a period. Wealth is a stock held at a point in time. Conflating the two is one of the most common errors in the chapter.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Intermediate goods are excluded from GDP because:",
+          o: [
+            "Their value is already embodied in the price of the final goods, so counting them again would double count",
+            "Their prices are set by firms rather than by markets",
+            "They are usually produced by the informal sector",
+            "They are typically imported rather than produced domestically",
+          ],
+          a: 0,
+          fb: "The flour in the bread is already in the price of the bread. Counting both inflates output without any additional production having occurred.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "A domestically produced final good sells for ₱100. Why must the production, income and expenditure approaches all yield ₱100?",
+          o: [
+            "Because statistical agencies adjust the three estimates until they match",
+            "Because market prices are assumed to equal marginal cost in competitive equilibrium",
+            "Because all three approaches are estimated from the same household survey",
+            "Because the market value of final output equals the value added created in producing it, which equals the incomes paid out in producing it",
+          ],
+          a: 3,
+          fb: "The three approaches are three vantage points on a single transaction: what was made, what was earned making it, and what was paid for it.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Under the production approach, the contribution of an enterprise to GDP is measured as:",
+          o: [
+            "Its total sales revenue",
+            "Its gross output minus the intermediate inputs it purchased",
+            "Its profits after tax",
+            "The total wages it paid to its employees",
+          ],
+          a: 1,
+          fb: "That difference is gross value added. Summing it across all sectors — agriculture, industry, services — gives GDP.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Which of the following is NOT a component of GDP measured by the income approach?",
+          o: [
+            "Household final consumption expenditure",
+            "Net operating surplus",
+            "Compensation of employees",
+            "Taxes on production and imports, less subsidies",
+          ],
+          a: 0,
+          fb: "Household consumption belongs to the expenditure approach. The income side records compensation of employees, consumption of fixed capital, net taxes on production, and net operating surplus.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Why do statisticians impute a rental value for owner-occupied housing?",
+          o: [
+            "To capture the capital gains that homeowners enjoy when property prices rise",
+            "Because homeowners are legally required to declare an equivalent rental income",
+            "Because a housing service is produced and consumed whether or not a market transaction occurs, so excluding it would make GDP fall simply because more people own rather than rent",
+            "To offset the mortgage interest that homeowners pay to banks",
+          ],
+          a: 2,
+          fb: "The owner-occupant is treated as a landlord renting to himself, with the imputed value based on rents for comparable tenant-occupied dwellings.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "A family buys a twenty-year-old house through a licensed broker this year. What enters this year's GDP?",
+          o: [
+            "The full sale price of the house, recorded as residential investment",
+            "Only the broker's commission",
+            "The full sale price, recorded as household consumption",
+            "Nothing at all",
+          ],
+          a: 1,
+          fb: "The house was counted in the year it was built. The brokerage service, however, is produced this year, so its market value enters current GDP.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "A newly constructed home is recorded in the national accounts as:",
+          o: [
+            "Household consumption in the year it is purchased, at the full sale price",
+            "A change in inventories until it is occupied",
+            "Government expenditure if any public infrastructure serves it",
+            "Residential investment in the year it is completed, at the value of the construction only",
+          ],
+          a: 3,
+          fb: "The land and any transfer premium are not new production. Only the construction represents output created in that year.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "An identical new delivery van is bought in one case by a household and in another by a courier firm. How are the two purchases classified?",
+          o: [
+            "Both are consumption, since the physical good is identical",
+            "Both are investment, since a van is a durable good",
+            "The household purchase is consumption; the firm's purchase is investment",
+            "The household purchase is investment; the firm's purchase is an intermediate input",
+          ],
+          a: 2,
+          fb: "Classification follows the purchaser and the use, not the physical characteristics of the good.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "The purchase of shares in a listed company is excluded from GDP because:",
+          o: [
+            "Share purchases are transfers of ownership of existing financial assets rather than payments for newly produced output, and are treated as saving",
+            "Share prices are too volatile to be measured reliably",
+            "Financial transactions are classified as intermediate inputs",
+            "Shares are usually purchased by foreigners",
+          ],
+          a: 0,
+          fb: "No good or service is produced when ownership of an existing claim changes hands. The accounts treat this as saving, not spending.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Government transfer payments such as pensions and social benefits are excluded from the government spending component of GDP because:",
+          o: [
+            "They are financed by borrowing rather than taxation",
+            "They are recorded instead under household consumption at the time they are paid",
+            "They are received by households rather than firms",
+            "No good or service is produced in exchange for the payment",
+          ],
+          a: 3,
+          fb: "G captures government purchases of goods and services. A transfer merely redistributes purchasing power; it is counted later if and when the recipient spends it.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "If many households shift from cooking at home to eating in restaurants, measured GDP rises even if the quantity of food consumed is unchanged. The best explanation is that:",
+          o: [
+            "Restaurant food is of higher quality than home cooking",
+            "GDP records only production that passes through the market, so unpaid household work is invisible to it",
+            "Restaurants pay taxes that households do not",
+            "Restaurant meals are classified as investment rather than consumption",
+          ],
+          a: 1,
+          fb: "The same limitation explains why unpaid domestic work and cooking your own dinner never appear, and why the informal sector is largely missing.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Philippine GNI consistently exceeds Philippine GDP. The principal reason is:",
+          o: [
+            "Large net foreign income inflows, particularly compensation earned by overseas Filipino workers",
+            "A persistent surplus in the trade of goods and services",
+            "Higher depreciation rates than in comparable economies",
+            "The exclusion of imports from the GNI measure",
+          ],
+          a: 0,
+          fb: "GDP measures production located inside the borders; GNI measures income accruing to residents wherever earned. Net foreign income is the bridge between them.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "A factory pollutes a river. Nearby residents fall ill and pay for medical treatment, and the government hires workers to clean up the river. The net effect on measured GDP is that it:",
+          o: [
+            "Falls, because the environmental damage is deducted as a cost",
+            "Is unchanged, because the damage and the remedial spending offset each other",
+            "Rises, because the damage is never deducted while both the medical treatment and the clean-up are counted as production",
+            "Rises only if the clean-up is carried out by private contractors rather than the state",
+          ],
+          a: 2,
+          fb: "This is the chapter's clearest demonstration that GDP is not a measure of well-being. Damage is invisible; repairing it counts as output.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Real GDP is preferred to nominal GDP for measuring growth because:",
+          o: [
+            "It includes the informal sector, which nominal GDP omits",
+            "It removes the effect of price changes, so movements reflect changes in the volume of output",
+            "It is measured at market prices rather than factor cost",
+            "It adjusts for changes in the size of the population",
+          ],
+          a: 1,
+          fb: "Without deflation you cannot tell whether an economy produced more or simply charged more for the same output.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "A beach resort earns $150,000 in Q4 2025, $90,000 in Q1 2025 and $100,000 in Q1 2026. Why is the year-on-year comparison more informative than the quarter-on-quarter one?",
+          o: [
+            "Year-on-year comparisons always produce larger numbers, which are easier to interpret",
+            "Quarter-on-quarter comparisons cannot be computed when revenue falls",
+            "Annual data are collected more accurately than quarterly data",
+            "Year-on-year comparison holds the season constant, so it separates the underlying trend from the seasonal pattern that the quarter-on-quarter figure confounds with it",
+          ],
+          a: 3,
+          fb: "The −33.3% quarter-on-quarter fall is almost entirely seasonal. Comparing Q1 with the previous Q1 reveals genuine growth of +11.1%.",
+        },
+        {
+          ch: "Chapter 4 — The System of National Income and Product Accounts",
+          q: "Chain-weighted measures of real GDP are used because:",
+          o: [
+            "They eliminate the need to collect price data",
+            "They allow nominal and real GDP to be equal in every period",
+            "Fixed base-year prices become progressively less representative as relative prices change, biasing measured real growth the further you move from the base year",
+            "They convert domestic output into a common international currency",
+          ],
+          a: 2,
+          fb: "Chain weighting updates the weights period by period rather than freezing the relative price structure of a single distant year.",
+        },
+        // ============ CHAPTER 6.1–6.3 ============
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "The relation (S − I) + (T − G) − CAB ≡ 0 is best described as:",
+          o: [
+            "An accounting identity that holds by construction, which constrains what the balances can jointly be but does not by itself explain what causes them",
+            "A behavioural theory explaining how each sector chooses its balance",
+            "An equilibrium condition that holds only at full employment",
+            "A policy rule that governments are legally obliged to satisfy",
+          ],
+          a: 0,
+          fb: "The identity tells you what must add up. Causation is a separate question the identity itself cannot settle.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Assume the current account balance is zero. If the private domestic sector runs a surplus of 4% of GDP, the government sector must be running:",
+          o: [
+            "A surplus of 4% of GDP",
+            "A deficit of 8% of GDP",
+            "A balanced budget",
+            "A deficit of 4% of GDP",
+          ],
+          a: 3,
+          fb: "With CAB = 0, the identity collapses to (S − I) = (G − T). The private surplus and the government deficit are the same number seen from opposite sides.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "A nation runs a current account deficit. For its private domestic sector to save overall — that is, to spend less than its income — it is necessary that:",
+          o: [
+            "The government runs a fiscal surplus",
+            "The government runs a fiscal deficit larger than the current account deficit",
+            "The government runs a balanced budget",
+            "The private sector reduces its investment to zero",
+          ],
+          a: 1,
+          fb: "From (S − I) = (G − T) + CAB, a negative CAB must be more than offset by the fiscal deficit for the left-hand side to be positive.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Under what condition can all three sectoral balances be simultaneously positive — the so-called 'Golden Triangle'?",
+          o: [
+            "When the country runs a current account surplus that is larger than its fiscal surplus",
+            "When private investment exceeds private saving",
+            "When the government runs a large enough fiscal surplus",
+            "It is arithmetically impossible under any circumstances",
+          ],
+          a: 0,
+          fb: "It requires a substantial external surplus, which by definition cannot be enjoyed by every country at once. Sweden is the standard example.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Which statement correctly distinguishes 'Saving' from 'savings'?",
+          o: [
+            "Saving is measured in real terms while savings is measured in nominal terms",
+            "Saving refers to household behaviour while savings refers to corporate behaviour",
+            "Saving is a flow that is a residual of income and involves changes in net financial assets; savings is a gross stock of assets held, so more savings need not mean higher net worth",
+            "The two terms are interchangeable and the distinction is purely stylistic",
+          ],
+          a: 2,
+          fb: "A rise in Saving does not automatically mean a rise in savings, and a rise in savings tells you about assets held, not about net position.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Assume CAB = 0. The government's fiscal deficit increases because it cuts taxes. By accounting, this must:",
+          o: [
+            "Leave private sector Saving unchanged, since taxes are merely a transfer",
+            "Increase private sector net saving (S − I) by an equal amount",
+            "Reduce private sector Saving, because lower tax revenue means less public saving to lend on",
+            "Increase private investment by an equal amount",
+          ],
+          a: 1,
+          fb: "With S = Y − C − T, a fall in T raises S directly. The identity guarantees the two moves match, peso for peso.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "A commercial bank grants a loan to a household. What happens to the net financial position of the private domestic sector as a whole?",
+          o: [
+            "It improves, because a new financial asset has been created",
+            "It deteriorates, because the household has taken on debt",
+            "It improves only if the household spends the loan domestically",
+            "It is unchanged, because the bank's new asset and the household's new liability are both inside the sector and cancel out",
+          ],
+          a: 3,
+          fb: "Transactions within a sector never change that sector's net position. This is why the private sector cannot lift its own net financial wealth by borrowing from itself.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Which of the following is a VERTICAL transaction?",
+          o: [
+            "A household taking out a mortgage from a commercial bank",
+            "A firm purchasing raw materials from another firm",
+            "The government paying a social benefit to a household",
+            "An investor buying shares in a listed corporation",
+          ],
+          a: 2,
+          fb: "Vertical transactions run between the government and the non-government sector and do change the latter's stock of net financial assets. The other three are horizontal.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "The only way for the domestic private sector as a whole to increase its net financial assets is through:",
+          o: [
+            "Transactions with the government sector or the external sector",
+            "Higher household saving out of existing income",
+            "Increased lending between domestic banks and domestic firms",
+            "Rising valuations on the domestic stock market",
+          ],
+          a: 0,
+          fb: "Everything internal nets to zero. Net financial wealth must come from outside the sector — from government deficits or a current account surplus.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "In the sectoral accounting framework, 'outside wealth' refers to:",
+          o: [
+            "Financial claims held by one part of the private sector against another",
+            "Foreign currency held by residents for speculative purposes",
+            "Real assets such as land and buildings",
+            "Net financial assets originating outside the private sector — that is, claims on the government",
+          ],
+          a: 3,
+          fb: "'Inside' is within the private sector and nets to zero. 'Outside' is outside the private sector, which is why it can constitute net wealth for it.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "In a closed economy in which the government balances its budget every year, the private sector's net financial wealth would be:",
+          o: [
+            "Equal to the accumulated stock of private bank deposits",
+            "Zero",
+            "Equal to the capital stock",
+            "Rising steadily in line with GDP",
+          ],
+          a: 1,
+          fb: "With no external sector and no public debt, every private financial asset is matched by a private liability. Net private financial wealth equals public debt.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Which category of wealth does NOT net to zero across sectors?",
+          o: [
+            "Real assets such as buildings, machinery and land",
+            "Government bonds",
+            "Corporate debt securities",
+            "Bank deposits",
+          ],
+          a: 0,
+          fb: "Every financial asset is someone's liability. Real assets are assets with no corresponding claim against anyone, so they represent genuine aggregate net wealth.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Which of the following is a STOCK rather than a flow?",
+          o: [
+            "The fiscal deficit for the year",
+            "Gross capital formation this quarter",
+            "The outstanding stock of public debt",
+            "Exports of services in 2025",
+          ],
+          a: 2,
+          fb: "A flow is measured per unit of time; a stock is measured at a point in time and is the net sum of prior relevant flows.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "How does the direction of causation between income and spending differ at the individual and the aggregate level?",
+          o: [
+            "At both levels income causes spending, since nobody can spend what they have not earned",
+            "For an individual, income constrains spending; for the economy as a whole, aggregate spending creates aggregate income",
+            "At both levels spending causes income, since all spending is received by someone",
+            "For an individual, spending creates income; for the economy as a whole, income constrains spending",
+          ],
+          a: 1,
+          fb: "A society cannot decide to have more income, but it can decide to spend more — and all spending is received by someone, somewhere, as income.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Why do the authors reject the conventional story that households save, banks collect those savings, and banks then lend them to firms for investment?",
+          o: [
+            "Because households in practice save too little for the mechanism to matter",
+            "Because central banks, not commercial banks, are the source of all credit",
+            "Because firms finance investment exclusively from retained earnings",
+            "Because banks create deposits when they lend, so prior saving is not a precondition for lending",
+          ],
+          a: 3,
+          fb: "Loans create deposits. The loanable funds story treats banks as intermediaries of a scarce pool of savings, which misdescribes how modern banking works.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Which statement about reserve balances is correct?",
+          o: [
+            "They are assets of the central bank held as liabilities by commercial banks",
+            "They are created when a commercial bank makes a loan to a household",
+            "They are liabilities of the central bank, held by commercial banks, and no private institution can create them",
+            "They are held by households as a form of precautionary saving",
+          ],
+          a: 2,
+          fb: "Reserves are created when the central bank credits a bank's reserve account. They are used for interbank settlement and to meet reserve requirements.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "Why do the authors argue that the private domestic sector cannot run deficits indefinitely?",
+          o: [
+            "Because private deficits must be funded and accumulate as a rising stock of debt on private balance sheets, and unlike a currency-issuing government the private sector faces a genuine financing constraint",
+            "Because the law prohibits private sector debt from exceeding a fixed share of GDP",
+            "Because the identity makes persistent private deficits arithmetically impossible",
+            "Because banks are required to refuse credit once a household's debt reaches its annual income",
+          ],
+          a: 0,
+          fb: "The identity permits every point on the map; it is the funding requirement and the resulting debt build-up that makes the light blue zone a reliable indicator of financial fragility.",
+        },
+        {
+          ch: "Chapter 6.1–6.3 — Sectoral Accounting",
+          q: "A country adopts a fiscal rule capping the fiscal deficit at 3% of GDP. Within the sectoral balances framework, the consequence is that:",
+          o: [
+            "The private domestic sector is guaranteed a surplus regardless of the external position",
+            "The current account balance is forced into surplus",
+            "The identity no longer holds, since one balance is constrained by law",
+            "The available policy space shrinks, and a country with a current account deficit may be unable to run a deficit large enough to let its private sector net save",
+          ],
+          a: 3,
+          fb: "This is the euro triangle. The rule does not repeal the identity — it simply removes part of the space in which the government could otherwise support demand.",
+        },
+        // ============ CHAPTER 7.6 ============
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "Korean arrivals to the Philippines number in the millions while German arrivals number in the tens of thousands. Converting both to index numbers with a common base allows you to:",
+          o: [
+            "Determine which country sends more tourists in absolute terms",
+            "Compare their relative rates of change directly, since the units and the difference in scale drop out",
+            "Estimate the total revenue generated by each group",
+            "Forecast future arrivals from each country",
+          ],
+          a: 1,
+          fb: "The index expresses each value as a percentage of the base, so the unit of measurement disappears. Absolute size is exactly what it removes.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "For a composite such as seafood, indexing the average price gives a different answer from averaging the individual price indices. Why?",
+          o: [
+            "Because indexing the average implicitly weights items by their price level, while averaging the indices gives every item equal weight regardless of its importance",
+            "Because averaging indices requires a longer time series",
+            "Because one method uses nominal prices and the other uses real prices",
+            "Because the two methods use different base years by construction",
+          ],
+          a: 0,
+          fb: "Neither method uses quantity information, which is the gap the weighted Laspeyres and Paasche formulas are designed to fill.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "A Laspeyres price index holds which element fixed?",
+          o: [
+            "The prices of the base period",
+            "The quantities of the current period",
+            "The quantities of the base period",
+            "The geometric mean of base and current quantities",
+          ],
+          a: 2,
+          fb: "Laspeyres asks what the base-period basket would cost at today's prices. The basket is frozen; only the prices move.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "A Paasche price index differs from a Laspeyres index in that it:",
+          o: [
+            "Uses base-period prices rather than current prices",
+            "Uses current-period quantities as weights rather than base-period quantities",
+            "Excludes imported goods from the basket",
+            "Is always expressed as a chain index",
+          ],
+          a: 1,
+          fb: "Paasche revalues the current basket at base-period prices. Its weights are updated each period, which is precisely why the GDP deflator is Paasche-type.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "The Fisher index is constructed as:",
+          o: [
+            "The arithmetic mean of the Laspeyres and Paasche indices",
+            "A Laspeyres index re-based every five years",
+            "The Laspeyres index divided by the Paasche index",
+            "The geometric mean of the Laspeyres and Paasche indices",
+          ],
+          a: 3,
+          fb: "Taking the geometric mean of the two is the standard way of splitting the difference between base-period and current-period weighting.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "Why does a Laspeyres price index tend to overstate the rise in the cost of living?",
+          o: [
+            "Because it includes goods that consumers no longer purchase at all",
+            "Because it uses market prices rather than prices net of tax",
+            "Because it holds base-period quantities fixed and so ignores that consumers substitute away from goods that have become relatively more expensive",
+            "Because it is updated more frequently than the Paasche index",
+          ],
+          a: 2,
+          fb: "This is substitution bias. Paasche, using current quantities, errs in the opposite direction and tends to understate the increase.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "Which pairing is correct?",
+          o: [
+            "GDP deflator — current-period weights (Paasche); CPI — base-period basket weights (Laspeyres)",
+            "GDP deflator — base-period weights (Laspeyres); CPI — current-period weights (Paasche)",
+            "Both the GDP deflator and the CPI use current-period weights",
+            "Both the GDP deflator and the CPI use base-period weights",
+          ],
+          a: 0,
+          fb: "The deflator emerges from dividing nominal by real GDP, which gives current-quantity weighting. The CPI prices a fixed basket — in the Philippines, a chained Laspeyres.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "To convert a nominal salary series for a particular group of workers into real terms, you should divide by:",
+          o: [
+            "The GDP deflator, since it covers all domestically produced output",
+            "The index of industrial production",
+            "The exchange rate against the US dollar",
+            "A price index that reflects the prices actually faced by the group whose salary is being deflated",
+          ],
+          a: 3,
+          fb: "Salaries are not the product of a price and a quantity, so what matters is the purchasing power of the money unit for that specific group.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "An old CPI series with base 1990 = 100 reads 807.7 in 2021, and a new series has base 2021 = 100. To extend the old series forward using the new one, you:",
+          o: [
+            "Add 707.7 to each value of the new series",
+            "Multiply the new series by the conversion factor 8.077",
+            "Divide the new series by the conversion factor 8.077",
+            "Re-base both series to the midpoint of the overlap",
+          ],
+          a: 1,
+          fb: "The overlapping year supplies the conversion factor. Multiply the new series by it to run the old series forward, or divide the old by it to run the new series back.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "To re-base an existing index series so that 2023 = 100, you should:",
+          o: [
+            "Divide every observation by the 2023 value and multiply by 100",
+            "Subtract the 2023 value from every observation",
+            "Divide the 2023 value by every observation and multiply by 100",
+            "Recompute the index from the original prices and quantities, since re-basing is not possible",
+          ],
+          a: 0,
+          fb: "Re-basing is a rescaling. Because it is proportional, you can start from any existing base and arrive at the same re-based series.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "A chain index differs from a fixed-base index in that:",
+          o: [
+            "It expresses values in constant rather than current prices",
+            "It excludes volatile items such as food and energy",
+            "It updates the comparison base each period and links the successive movements together, rather than comparing everything to one distant fixed year",
+            "It can only be applied to quantity series, not to price series",
+          ],
+          a: 2,
+          fb: "Chaining keeps the weights current. This is why the PSA describes the Philippine CPI as a chained Laspeyres index.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "In constructing the CPI, the PSA assigns each item in the market basket a weight based on:",
+          o: [
+            "Its share of total manufacturing output",
+            "Its share of average household spending, taken from the Family Income and Expenditure Survey",
+            "The volatility of its price over the preceding decade",
+            "Its share of the country's imports",
+          ],
+          a: 1,
+          fb: "The weights come from what households actually spend on each commodity group, which is why the basket must be periodically revised.",
+        },
+        {
+          ch: "Chapter 7.6 — Index Numbers",
+          q: "The inflation rate falls from 6% to 3%. Which interpretation is correct?",
+          o: [
+            "The average price level has fallen by 3%",
+            "The average price level is unchanged from the previous year",
+            "The CPI has returned to its base-year value of 100",
+            "The average price level is still rising, only more slowly, and the accumulated increase from earlier periods remains in place",
+          ],
+          a: 3,
+          fb: "A lower inflation rate is a lower rate of increase, not a decrease. Prices falling would require a negative rate. Note too that two households with different spending patterns face different personal inflation rates even under the same headline CPI.",
+        },
+      ];
+
+      let right = 0,
+        wrong = 0,
+        done = 0;
+      const TOTAL = Q.length;
+
+      function fmt(n) {
+        return Number.isInteger(n) ? n.toString() : n.toFixed(1);
+      }
+
+      function raw() {
+        return right - 0.5 * wrong;
+      }
+
+      function upd() {
+        const r = raw();
+        const el = document.getElementById("s-raw");
+        el.textContent = fmt(r);
+        el.className = r < 0 ? "neg" : "";
+        document.getElementById("s-right").textContent = right;
+        document.getElementById("s-wrong").textContent = wrong;
+        document.getElementById("s-done").textContent = done;
+        document.getElementById("ex-score-txt").textContent =
+          `${fmt(r)} / ${TOTAL}`;
+        document.getElementById("ex-prog").style.width =
+          (done / TOTAL) * 100 + "%";
+      }
+
+      function showTab(t, btn) {
+        document
+          .querySelectorAll(".tab-panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll("nav button")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("tab-" + t).classList.add("active");
+        if (btn) btn.classList.add("active");
+        else {
+          document.querySelectorAll("nav button").forEach((b) => {
+            if (
+              (t === "notes" && b.textContent.includes("Notes")) ||
+              (t === "exam" && b.textContent.includes("Exam"))
+            )
+              b.classList.add("active");
+          });
+        }
+        document.getElementById("score-banner").style.display =
+          t === "notes" ? "none" : "flex";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function toggleSession(header) {
+        header.nextElementSibling.classList.toggle("open");
+      }
+
+      function buildExam() {
+        const w = document.getElementById("ex-wrap");
+        w.innerHTML = "";
+        document.getElementById("ex-result").classList.remove("show");
+        let lc = "";
+        Q.forEach((q, i) => {
+          if (q.ch !== lc) {
+            const d = document.createElement("div");
+            d.className = "ch-divider";
+            d.textContent = q.ch;
+            w.appendChild(d);
+            lc = q.ch;
+          }
+          const c = document.createElement("div");
+          c.className = "q-card";
+          c.id = `qc${i}`;
+          c.innerHTML = `<div class="q-num"><span>Question ${i + 1} of ${TOTAL}</span><span class="delta" id="qd${i}"></span></div>
+    <div class="q-text">${q.q}</div>
+    <div class="options" id="qo${i}">
+      ${q.o.map((o, j) => `<button class="option-btn" onclick="answer(${i},${j})">${"ABCD"[j]}. ${o}</button>`).join("")}
+    </div>
+    <div class="feedback" id="qf${i}"></div>`;
+          w.appendChild(c);
+        });
+      }
+
+      function answer(qi, s) {
+        const q = Q[qi],
+          c = document.getElementById(`qc${qi}`),
+          fb = document.getElementById(`qf${qi}`),
+          dl = document.getElementById(`qd${qi}`);
+        document.querySelectorAll(`#qo${qi} .option-btn`).forEach((b, j) => {
+          b.disabled = true;
+          if (j === q.a) b.classList.add("correct");
+          if (j === s && s !== q.a) b.classList.add("wrong");
+        });
+        fb.classList.add("show");
+        if (s === q.a) {
+          right++;
+          c.classList.add("answered-ok");
+          dl.textContent = "+1.0";
+          dl.className = "delta plus";
+          fb.textContent = "✓ Correct. " + q.fb;
+        } else {
+          wrong++;
+          c.classList.add("answered-bad");
+          dl.textContent = "−0.5";
+          dl.className = "delta minus";
+          fb.textContent = "✗ Incorrect. " + q.fb;
+        }
+        done++;
+        upd();
+        if (done === TOTAL) showResult();
+      }
+
+      function showResult() {
+        const r = raw();
+        const pct = Math.round((r / TOTAL) * 100);
+        document.getElementById("ex-big").textContent = `${fmt(r)} / ${TOTAL}`;
+        document.getElementById("ex-breakdown").textContent =
+          `${right} correct · ${wrong} wrong (−${fmt(wrong * 0.5)}) · ${pct}%`;
+
+        // per-chapter breakdown
+        const byCh = {};
+        Q.forEach((q, i) => {
+          if (!byCh[q.ch]) byCh[q.ch] = { n: 0, ok: 0 };
+          byCh[q.ch].n++;
+          if (document.getElementById(`qc${i}`).classList.contains("answered-ok"))
+            byCh[q.ch].ok++;
+        });
+        document.getElementById("ex-chapters").innerHTML = Object.keys(byCh)
+          .map((k) => {
+            const b = byCh[k];
+            const s = b.ok - 0.5 * (b.n - b.ok);
+            return `${k.split("—")[0].trim()} — ${b.ok}/${b.n} correct · ${fmt(s)} pts`;
+          })
+          .join("<br/>");
+
+        document.getElementById("ex-msg").textContent =
+          pct >= 90
+            ? "Outstanding. You are ready for this quiz."
+            : pct >= 75
+              ? "Strong. Go back over the items you missed and the notes for those chapters."
+              : pct >= 60
+                ? "Passing, but the penalty is costing you. Re-read the chapters where you lost the most points."
+                : "Work through the Notes tab chapter by chapter before attempting this again.";
+        document.getElementById("ex-result").classList.add("show");
+      }
+
+      function resetExam() {
+        right = 0;
+        wrong = 0;
+        done = 0;
+        buildExam();
+        upd();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      buildExam();
+      upd();
+    </script>
+  </body>
+</html>
